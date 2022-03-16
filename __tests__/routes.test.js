@@ -39,24 +39,30 @@ describe('post testing', () => {
   })
 
   // Clean a room router.put('/room/:id', cleanRoom);
-  xit('update a post', async () => {
-
+  it('update a post', async () => {
     
-
-
-
 
     let response = await request(app).post('/posts').send({ 
       title: 'if you are reading this, you are cool',
       updated: 'April 1st, 1990',
-      content: 'Ryan confessed',
+      content:'Ryan plead the fif',
       poster: 'nottestguy',
       email: 'notfakeemail.com',
-    });
-    
-    let response = await request(app).put('/posts/1')
+    })
 
-    expect(response.status).toEqual(200);
+    let id = response.body._id;;
+    
+    let putResponse = await request(app).put('/posts/' + id).send(
+      {
+        title: 'if you are reading this, you are cool',
+        updated: 'April 1st, 1990',
+        content:'Ryan plead the 6th',
+        poster: 'nottestguy',
+        email: 'notfakeemail.com',
+      }
+    )
+
+    expect(putResponse.status).toEqual(201);
   })
 
 
@@ -94,16 +100,6 @@ describe('404 and 500 tests', () => {
   it('500 test', async () => {
     let response = await request(failTest).get('/')
     expect(response.status).toEqual(500);
-  })
-})
-
-
-xdescribe('Delete guest (saved for last)', () => {
-  // router.delete('/guest/:id', removeGuest);
-  it('Be able to delete a guest', async () => {
-    let response = await request(app).delete('/guest/1')
-
-    expect(response.status).toEqual(200)
   })
 })
 
